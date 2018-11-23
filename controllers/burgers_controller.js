@@ -1,9 +1,9 @@
 var express = require("express");
-var app = express();
+var router = express.Router();
 
 var burger = require("../models/burger.js");
 
-app.get("/", function(req, res) {
+router.get("/", function(req, res) {
   burger.all(function(data) {
     var hbsObject = {
       burgers: data
@@ -13,7 +13,7 @@ app.get("/", function(req, res) {
   });
 });
 
-app.post("/", function(req, res) {
+router.post("/", function(req, res) {
   burger.create([
     "burger_name", "devoured"
   ], [
@@ -23,7 +23,7 @@ app.post("/", function(req, res) {
   });
 });
 
-app.put("/:id", function(req, res) {
+router.put("/:id", function(req, res) {
   var condition = "id = " + req.params.id;
 
   console.log("condition", condition);
@@ -35,7 +35,7 @@ app.put("/:id", function(req, res) {
   });
 });
 
-app.delete("/:id", function(req, res) {
+router.delete("/:id", function(req, res) {
   var condition = "id = " + req.params.id;
 
   burger.delete(condition, function() {
@@ -43,4 +43,4 @@ app.delete("/:id", function(req, res) {
   });
 });
 
-module.exports = app;
+module.exports = router;
